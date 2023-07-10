@@ -1,10 +1,67 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom/client';
+import React, { useState, useEffect } from 'react';
+import Api from '../services/Api'
 
-function FormNovaLista() {
+const FormNovaLista = () => {
+  const [produtos, setProdutos] = useState([]);
+  const [newProduto, setNewProduto] = useState('');
+
+  useEffect(() => {
+    fetchProdutos();
+  }, []);
+
+  const fetchProdutos = async () => {
+    try {
+      const response = await Api.get('http://localhost:4200/produtos');
+      setProdutos(response.data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+
+  const addProduto = async () => {
+    try {
+      const response = await Api.post('http://localhost:4200/produtos', {
+        nome: newProduto
+      });
+      setProdutos([...produtos, response.data]);
+      setNewProduto('');
+    } catch (error) {
+      console.error('Error adding product:', error);
+    }
+  };
+
+  return (
+    <div>
+      <h1>Product List</h1>
+      <ul>
+        {produtos.map(produto => (
+          <li key={produto.id}>{produto.nome}</li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        value={newProduto}
+        onChange={event => setNewProduto(event.target.value)}
+      />
+      <button onClick={addProduto}>Add Product</button>
+    </div>
+  );
+};
+
+export default FormNovaLista;
+
+/*function FormNovaLista() {
+  const [nome, setNome] = useState([]);
   const [listaNome, setListaNome] = useState('');
   const [produto, setProduto] = useState('');
   const [listaProdutos, setListaProdutos] = useState([]);
+
+  const adicionarNomeLista = () => {
+    if (nome.trim() !== ''){
+      setListaNome([nome]);
+      setNome('');
+    }
+  };
 
   const adicionarProduto = () => {
     if (produto.trim() !== '') {
@@ -22,7 +79,7 @@ function FormNovaLista() {
         value={listaNome}
         onChange={(e) => setListaNome(e.target.value)}
       />
-      <button onClick={adicionarProduto}> Criar lista </button>
+      <button onClick={adicionarNomeLista}> Criar lista </button>
       <h2>{listaNome}</h2>
       <ul>
         {listaProdutos.map((produto, index) => (
@@ -43,7 +100,7 @@ function FormNovaLista() {
 export default FormNovaLista;
 
 
-/*function FormNovaLista(props){
+function FormNovaLista(props){
     return (
         <form>
             <label>

@@ -7,7 +7,7 @@ function ListaCards(props) {
     const [produtos, setProdutos] = useState([]);
     
     useEffect(() => {
-        Api.get("https://localhost/data/produtos")
+        Api.get("")
             .then((response) => setProdutos(response.data))
             .catch((err) => console.log(err))    
     },[])
