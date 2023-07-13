@@ -1,49 +1,78 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from "react-router-dom";
 import Api from '../services/Api'
+import Home from '../pages/Home'
+
 
 const FormNovaLista = () => {
-  const [produtos, setProdutos] = useState([]);
-  const [newProduto, setNewProduto] = useState('');
+  const [listas, setListas] = useState([]);
+  const [newLista, setNewLista] = useState('');
+  const [listaSelecionada, setListaSelecionada] = useState(null);
+  const [deleteListaId, setDeleteListaId] = useState('');
+  
 
-  useEffect(() => {
-    fetchProdutos();
+  /*useEffect(() => {
+    fetchListas();
   }, []);
 
-  const fetchProdutos = async () => {
+  const fetchListas = async () => {
     try {
-      const response = await Api.get('http://localhost:4200/produtos');
-      setProdutos(response.data);
+      const response = await Api.get('http://localhost:4200/listas');
+      setListas(response.data);
     } catch (error) {
-      console.error('Error fetching products:', error);
+      console.error('Error fetching lists:', error);
+    }
+  };*/
+
+  const addLista = async () => {
+    try {
+      const response = await Api.post('http://localhost:4200/listas', { nome: newLista });
+      
+      setListas([...listas, response.data]);
+      setNewLista('');
+      
+    } catch (error) {
+      console.error('Error adding list:', error);
+    }
+    
+  };
+
+ /*const deleteLista = async (listaId) => {
+    try {
+      /*const response = await Api.delete(`http://localhost:4200/listas/${listaId}`);
+      console.log('Lista excluída:', response.data);
+      await Api.delete(`http://localhost:4200/listas/${listaId}`);
+      setListas(listas.filter((lista) => lista.id !== listaId));
+    } catch (error) {
+      console.error('Error deleting list:', error);
     }
   };
 
-  const addProduto = async () => {
-    try {
-      const response = await Api.post('http://localhost:4200/produtos', {
-        nome: newProduto
-      });
-      setProdutos([...produtos, response.data]);
-      setNewProduto('');
-    } catch (error) {
-      console.error('Error adding product:', error);
-    }
-  };
+  const selecionarLista = (lista) => {
+    setListaSelecionada(lista);
+  };*/
 
   return (
     <div>
-      <h1>Product List</h1>
-      <ul>
-        {produtos.map(produto => (
-          <li key={produto.id}>{produto.nome}</li>
-        ))}
-      </ul>
+      <h1> Nova Lista </h1>
+      {/*<ul>
+        {listas.map(lista => (
+          <li key={lista.id}>
+            {lista.nome}
+            
+            
+          </li>
+        ))}        
+        </ul>*/}
+      
       <input
         type="text"
-        value={newProduto}
-        onChange={event => setNewProduto(event.target.value)}
+        value={newLista}
+        onChange={(event) => setNewLista(event.target.value)}
       />
-      <button onClick={addProduto}>Add Product</button>
+      <Link to="/">
+        <button onClick={addLista} className="w3-button w3-orange w3-round-xlarge"> Salvar Lista </button>
+      </Link>
     </div>
   );
 };
