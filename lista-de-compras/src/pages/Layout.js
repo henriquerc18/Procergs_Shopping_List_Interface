@@ -16,18 +16,7 @@ const Layout = () => {
           <li>
             <Link to="/"> Home </Link>
           </li>
-          <li>
-            <Link to="/nova-lista"> Nova Lista </Link>
-          </li>
-          <li>
-            <Link to="/novo-produto"> Novo Produto </Link>
-          </li>
-          <li>
-            <Link to="/listas"> Listas </Link>
-          </li>
-          <li>
-            <Link to="/pesquisar-melhor-local-de-compra"> Pesquisar Melhor Local de Compra </Link>
-          </li>
+          
         </ul>
       </nav>
     </header>

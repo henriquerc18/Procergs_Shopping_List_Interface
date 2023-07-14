@@ -4,11 +4,9 @@ import Api from '../services/Api'
 
 
 const Listas = () => {
-  //const history = useHistory();
   const [listas, setListas] = useState([]);
   const [listaSelecionada, setListaSelecionada] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
-  //const [redirect, setRedirect] = useState(false);
   const navigate = useNavigate();
   const [editListName, setEditListName] = useState('');
   
@@ -28,8 +26,6 @@ const Listas = () => {
 
   const deleteLista = async (listaId) => {
     try {
-      /*const response = await Api.delete(`http://localhost:4200/listas/${listaId}`);
-      console.log('Lista excluída:', response.data);*/
       await Api.delete(`http://localhost:4200/listas/${listaId}`);
       setListas(listas.filter((lista) => lista.id !== listaId));
       if (listaSelecionada && listaSelecionada.id === listaId) {
@@ -39,14 +35,6 @@ const Listas = () => {
       console.error('Error deleting list:', error);
     }
   };
-
-  /*const selecionarLista = (lista) => {
-    setListaSelecionada(lista);
-    setRedirect(true);
-    //setListaSelecionada(lista);
-    //history.push(`/novo-produto/${lista.id}`);
-    //window.location.href = `/novo-produto/${lista.id}`;
-  };*/
 
   const startEditingList = (listaId, listaNome) => {
     setEditingListId(listaId);
@@ -74,21 +62,6 @@ const Listas = () => {
     // Redirecionar para a rota "/novo-produto/:listaId"
     navigate(`/novo-produto/${listaId}`);
   };
-
-  /*if (redirect) {
-    return <Redirect to={`/novo-produto/${listaSelecionada && listaSelecionada.id}`} />;
-  }*/
-  
-  /*const selecionarLista = async (lista) => {
-    setListaSelecionada(lista);
-    history.push(`/novo-produto/${lista.nome}`);
-    /*try {
-      const response = await Api.get(`http://localhost:4200/listas/${listaId}`);
-      setListaSelecionada(response.data);
-    } catch (error) {
-      console.error('Error fetching lists:', error);
-    }
-  };*/
 
 return (
     <>

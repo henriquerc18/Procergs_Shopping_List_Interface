@@ -78,4 +78,3 @@ const FormNovaLista = () => {
 };
 
 export default FormNovaLista;
-
