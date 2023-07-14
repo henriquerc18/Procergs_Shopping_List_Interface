@@ -11,6 +11,7 @@ const FormNovoProduto = () => {
   const [produtos, setProdutos] = useState([]);
   const [newProduto, setNewProduto] = useState('');
   const [deleteProdutoId, setDeleteProdutoId] = useState('');
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -44,6 +45,7 @@ const FormNovoProduto = () => {
       setProdutos([...produtos, response.data]);
       setNewProduto('');
     } catch (error) {
+      setError('Erro ao adicionar produto');
       console.error('Erro ao adicionar produto:', error);
     }
   };
@@ -77,6 +79,8 @@ const FormNovoProduto = () => {
       ) : ( 
         <p>Nenhum produto encontrado.</p>
       )}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        
         <input className="w3-round-xlarge"
           type="text"
           value={newProduto}

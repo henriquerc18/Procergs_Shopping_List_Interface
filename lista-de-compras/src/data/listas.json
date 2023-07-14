@@ -1,10 +1,6 @@
 {
   "listas": [
     {
-      "nome": "Mercado",
-      "id": 4
-    },
-    {
       "nome": "L5",
       "id": 5
     },
@@ -19,6 +15,10 @@
     {
       "nome": "L2",
       "id": 8
+    },
+    {
+      "nome": "Mercado",
+      "id": 9
     }
   ]
 }
