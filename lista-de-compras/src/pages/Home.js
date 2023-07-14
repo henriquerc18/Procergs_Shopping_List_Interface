@@ -7,6 +7,7 @@ import Listas from '../components/Listas'
 
 const Home = () => {
     const [listas, setListas] = useState([]);
+    const [listaSelecionada, setListaSelecionada] = useState(null);
     //const [produtos, setProdutos] = useState([]);
 
     useEffect(() => {
@@ -24,6 +25,10 @@ const Home = () => {
         } catch (error) {
             console.error('Error fetching products:', error);
         }
+    };
+
+    const selecionarLista = (lista) => {
+        setListaSelecionada(lista);
     };
 
     /*const fetchProdutos = async () => {
@@ -46,7 +51,7 @@ const Home = () => {
                    
                 </>
             )}  
-            <Listas listas={listas} />                
+            <Listas listas={listas} selecionarLista={selecionarLista} />                
         </div>
     </>
 };
