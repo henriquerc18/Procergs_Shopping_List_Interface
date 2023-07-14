@@ -53,8 +53,8 @@ const FormNovaLista = () => {
   };*/
 
   return (
-    <div>
-      <h1> Nova Lista </h1>
+    <div class="container"> 
+      <h2> Nova Lista </h2><br/>
       {/*<ul>
         {listas.map(lista => (
           <li key={lista.id}>
@@ -65,11 +65,11 @@ const FormNovaLista = () => {
         ))}        
         </ul>*/}
       
-      <input
+      <input className="w3-round-xlarge"
         type="text"
         value={newLista}
         onChange={(event) => setNewLista(event.target.value)}
-      />
+      /><br/>
       <Link to="/">
         <button onClick={addLista} className="w3-button w3-orange w3-round-xlarge"> Salvar Lista </button>
       </Link>

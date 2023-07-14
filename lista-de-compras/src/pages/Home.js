@@ -42,7 +42,7 @@ const Home = () => {
 
     return <>        
         <div class="container">        
-            <h3> Lista de Compras </h3>
+            <h2> Lista de Compras </h2>
             {listas.length < 5 && (
                 <>
                     <Link to="./nova-lista">

@@ -4,7 +4,7 @@ import Api from '../services/Api'
 import Home from '../pages/Home'
 import Listas from './Listas'
 
-const FormNovoProduto = ({ listaSelecionada }) => {
+const FormNovoProduto = () => {
   //const location = useLocation();
   const { listaId } = useParams();
   const [produtos, setProdutos] = useState([]);

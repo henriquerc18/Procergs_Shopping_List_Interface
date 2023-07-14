@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Api from '../services/Api'
 
+
 const Listas = () => {
   //const history = useHistory();
   const [listas, setListas] = useState([]);
   const [listaSelecionada, setListaSelecionada] = useState(null);
+  const [editingListId, setEditingListId] = useState(null);
+  const [editListName, setEditListName] = useState('');
   
 
   useEffect(() => {
@@ -35,6 +38,28 @@ const Listas = () => {
   const selecionarLista = (lista) => {
     setListaSelecionada(lista);
   };
+
+  const startEditingList = (listaId, listaNome) => {
+    setEditingListId(listaId);
+    setEditListName(listaNome);
+  };
+
+  const updateListName = async (listaId, novoNome) => {
+    try {
+      await Api.put(`http://localhost:4200/listas/${listaId}`, { nome: novoNome });
+      setListas((prevListas) =>
+        prevListas.map((lista) => {
+          if (lista.id === listaId) {
+            return { ...lista, nome: novoNome };
+          }
+          return lista;
+        })
+      );
+      setEditingListId(null);
+    } catch (error) {
+      console.error('Error updating list name:', error);
+    }
+  };
   
   /*const selecionarLista = async (lista) => {
     setListaSelecionada(lista);
@@ -49,21 +74,34 @@ const Listas = () => {
 
 return (
     <>
-        {/*<Link to="/novo-produto">*/}
-          <div>
-            <ul>
+       
+          <div class="container">
+            <h2>
                 {listas.map(lista => (
-                <li key={lista.id}>
+                  <h3 key={lista.id}>
+                    {editingListId === lista.id ? (
+                <>
+                  <input className="w3-round-xlarge"
+                    type="text"
+                    value={editListName}
+                    onChange={(event) => setEditListName(event.target.value)}
+                  />
+                  <button onClick={() => updateListName(lista.id, editListName)} className="w3-button w3-orange w3-round-xlarge w3-small"> Salvar </button>
+                </>  
+                    ) : (
+                    <>
                     {lista.nome} 
-                    <button onClick={() => deleteLista(lista.id)} className="w3-button w3-red w3-round-xlarge"> Excluir Lista </button>          
-                <Link to={`/novo-produto/${lista.id}`}>
-                    <button className="w3-button w3-blue w3-round-xlarge" onClick={() => selecionarLista(lista)}> Selecionar Lista </button>
-                </Link>   
-                </li>
+                    <button onClick={() => startEditingList(lista.id, lista.nome)} className="w3-button w3-gray w3-round-xlarge w3-small"> Editar </button>   
+                  
+                  <Link to={`/novo-produto/${lista.id}`}>
+                    <button className="w3-button w3-green w3-round-xlarge w3-small" onClick={() => selecionarLista(lista)}> Abrir </button>
+                  </Link>                  
+                  
+                    <button onClick={() => deleteLista(lista.id)} className="w3-button w3-red w3-round-xlarge w3-small"> Excluir </button> 
+                 </>)} </h3>
                 ))}        
-            </ul>
-          </div>
-        {/*</Link>*/}
+            </h2>
+          </div>        
     </>
   );
 

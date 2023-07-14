@@ -36,11 +36,11 @@ const Layout = () => {
     <Outlet />
     
     <main>
-        <div className="container">        
+               
         <footer> 
-            <h1> Footer </h1>
+          
         </footer>
-        </div>
+        
     </main>
       
     </>

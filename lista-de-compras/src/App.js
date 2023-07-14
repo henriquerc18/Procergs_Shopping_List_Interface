@@ -1,4 +1,5 @@
 import './App.css';
+import './pages/Layout.css';
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from './pages/Layout';
@@ -27,8 +28,11 @@ export default function App (){
           <Route path="pesquisar-melhor-local-de-compra" element={<PesquisarMelhorLocalDeCompra />} />
           <Route path="*" element={<NoPage />} />
         </Route>
-      </Routes>
+      </Routes><footer>
+      
+      </footer>
     </BrowserRouter>
+    
     </>    
   );  
 }
