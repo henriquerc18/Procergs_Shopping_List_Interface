@@ -7,6 +7,7 @@ import Listas from './Listas'
 const FormNovoProduto = () => {
   //const location = useLocation();
   const { listaId } = useParams();
+  const [listaSelecionada, setListaSelecionada] = useState(null);
   const [produtos, setProdutos] = useState([]);
   const [newProduto, setNewProduto] = useState('');
   const [deleteProdutoId, setDeleteProdutoId] = useState('');
@@ -15,6 +16,7 @@ const FormNovoProduto = () => {
     const fetchProdutos = async () => {
       try {
         const response = await Api.get(`http://localhost:4200/listas/${listaId}`);
+        setListaSelecionada(response.data);
         setProdutos(response.data.produtos);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -61,9 +63,9 @@ const FormNovoProduto = () => {
   };
 
   return (
-    <div>
-      <h1>Produtos da lista {listaId}</h1>
-
+    <div class="container">
+      <h2> {listaSelecionada && listaSelecionada.nome}</h2>
+      {produtos && produtos.length > 0 ? (
         <ul>
           {produtos.map(produto => (
             <li key={produto.id}>
@@ -72,16 +74,17 @@ const FormNovoProduto = () => {
             </li>
           ))}
         </ul>
-
-        <input
+      ) : ( 
+        <p>Nenhum produto encontrado.</p>
+      )}
+        <input className="w3-round-xlarge"
           type="text"
           value={newProduto}
           onChange={event => setNewProduto(event.target.value)}
-        />
-        <button onClick={addProduto}>Adicionar Produto</button>
+        /><br/>
+        <button onClick={addProduto} className="w3-button w3-orange w3-round-xlarge">Adicionar Produto</button>
     </div>
   );
 };
 
 export default FormNovoProduto;
-

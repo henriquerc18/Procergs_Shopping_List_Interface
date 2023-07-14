@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import Api from '../services/Api'
 
@@ -8,6 +8,8 @@ const Listas = () => {
   const [listas, setListas] = useState([]);
   const [listaSelecionada, setListaSelecionada] = useState(null);
   const [editingListId, setEditingListId] = useState(null);
+  //const [redirect, setRedirect] = useState(false);
+  const navigate = useNavigate();
   const [editListName, setEditListName] = useState('');
   
 
@@ -30,14 +32,21 @@ const Listas = () => {
       console.log('Lista excluída:', response.data);*/
       await Api.delete(`http://localhost:4200/listas/${listaId}`);
       setListas(listas.filter((lista) => lista.id !== listaId));
+      if (listaSelecionada && listaSelecionada.id === listaId) {
+        setListaSelecionada(null);
+      }
     } catch (error) {
       console.error('Error deleting list:', error);
     }
   };
 
-  const selecionarLista = (lista) => {
+  /*const selecionarLista = (lista) => {
     setListaSelecionada(lista);
-  };
+    setRedirect(true);
+    //setListaSelecionada(lista);
+    //history.push(`/novo-produto/${lista.id}`);
+    //window.location.href = `/novo-produto/${lista.id}`;
+  };*/
 
   const startEditingList = (listaId, listaNome) => {
     setEditingListId(listaId);
@@ -60,6 +69,15 @@ const Listas = () => {
       console.error('Error updating list name:', error);
     }
   };
+
+  const navigateToFormNovoProduto = (listaId) => {
+    // Redirecionar para a rota "/novo-produto/:listaId"
+    navigate(`/novo-produto/${listaId}`);
+  };
+
+  /*if (redirect) {
+    return <Redirect to={`/novo-produto/${listaSelecionada && listaSelecionada.id}`} />;
+  }*/
   
   /*const selecionarLista = async (lista) => {
     setListaSelecionada(lista);
@@ -94,7 +112,7 @@ return (
                     <button onClick={() => startEditingList(lista.id, lista.nome)} className="w3-button w3-gray w3-round-xlarge w3-small"> Editar </button>   
                   
                   <Link to={`/novo-produto/${lista.id}`}>
-                    <button className="w3-button w3-green w3-round-xlarge w3-small" onClick={() => selecionarLista(lista)}> Abrir </button>
+                    <button onClick={() => navigateToFormNovoProduto(lista.id)} className="w3-button w3-green w3-round-xlarge w3-small"> Abrir </button>
                   </Link>                  
                   
                     <button onClick={() => deleteLista(lista.id)} className="w3-button w3-red w3-round-xlarge w3-small"> Excluir </button> 
@@ -108,4 +126,3 @@ return (
 };
 
 export default Listas;
-

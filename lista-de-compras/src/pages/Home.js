@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
 import Api from '../services/Api'
-import FormNovaLista from '../components/FormNovaLista';
+//import FormNovaLista from '../components/FormNovaLista';
 import Listas from '../components/Listas'
 
 
@@ -51,7 +51,7 @@ const Home = () => {
                    
                 </>
             )}  
-            <Listas listas={listas} selecionarLista={selecionarLista} />                
+            <Listas listas={listas} />                
         </div>
     </>
 };

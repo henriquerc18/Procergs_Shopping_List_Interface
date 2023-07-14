@@ -24,7 +24,7 @@ export default function App (){
           <Route index element={<Home />} />         
           <Route path="nova-lista" element={<FormNovaLista />} />
           <Route path="listas" element={<Listas />} />
-          <Route path="novo-produto" element={<FormNovoProduto listaSelecionada={listaSelecionada} />} />
+          <Route path="novo-produto/:listaId" element={<FormNovoProduto />} />
           <Route path="pesquisar-melhor-local-de-compra" element={<PesquisarMelhorLocalDeCompra />} />
           <Route path="*" element={<NoPage />} />
         </Route>
@@ -36,4 +36,3 @@ export default function App (){
     </>    
   );  
 }
-
