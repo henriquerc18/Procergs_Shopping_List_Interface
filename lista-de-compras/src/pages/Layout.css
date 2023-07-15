@@ -23,15 +23,6 @@ header {
     margin-right: 10px;
 }
 
-#itensDePrevencao {
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 20px;
-    background-color: #F25050;
-    border: none;
-    margin-right: 10px;
-}
-
 footer > .rodape {
     background-color: #153F59;
     width: 100%;
